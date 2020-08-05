@@ -1,64 +1,57 @@
-import React, { Component } from "react";
+import React, { useState } from "react"
 
-class MemeGenerator extends Component {
-  state = {
+const MemeGenerator = () => {
+  const [inputText, setInputText] = useState({
     topText: "",
     bottomText: "",
-    randomImage: "https://i.imgflip.com/26am.jpg",
-    allMemeImgs: []
-  };
+  })
+  const [randomImage, setRandomImage] = useState(
+    "https://i.imgflip.com/26am.jpg"
+  ) //this is link to Georgio image
+  const [allMemeImgs, setAllMemeImgs] = useState([])
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+  console.log ("image link  " + randomImage)
+  //console.log (allMemeImgs)
 
-  componentDidMount() {
-    fetch("https://api.imgflip.com/get_memes")
-      .then(response => response.json())
-      .then(response =>
-        this.setState({
-          allMemeImgs: response.data.memes
-        })
-      );
+  const handleChange = e => {
+    setInputText({
+      ...inputText,
+      [e.target.name]: e.target.value,
+    })
+    
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const randNum = Math.floor(Math.random() * this.state.allMemeImgs.length);
-    const randMemeImgUrl = this.state.allMemeImgs[randNum].url;
-    this.setState({ randomImage: randMemeImgUrl });
-  };
+  const handleSubmit = e => {
+    e.preventDefault()
+    console.log("Could have submitted")
+  }
 
-  render() {
-    return (
-      <div className="meme-container">
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="topText"
-            placeholder="Add Top Text"
-            value={this.state.topText}
-            onChange={this.handleChange}
-          />
-          <input
-            type="text"
-            name="bottomText"
-            placeholder="Add Bottom Text"
-            value={this.state.bottomText}
-            onChange={this.handleChange}
-          />
-          <button>Generate</button>
-        </form>
-        <div className="meme">
-          <img src={this.state.randomImage} alt="" />
-          <h2 className="top">{this.state.topText}</h2>
-          <h2 className="bottom">{this.state.bottomText}</h2>
-        </div>
+  return (
+    <div className="meme-container">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="topText"
+          placeholder="Add Top Text"
+          value={inputText.topText}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="bottomText"
+          placeholder="Add Bottom Text"
+          value={inputText.bottomText}
+          onChange={handleChange}
+        />
+        <button>Generate</button>
+      </form>
+      <div className="meme">
+        <img src={randomImage} alt="" />
+        <h2 className="top">{inputText.topText}</h2>
+        <h2 className="bottom">{inputText.bottomText}</h2>
       </div>
-    );
-  }
+    </div>
+  )
 }
 
-export default MemeGenerator;
+export default MemeGenerator

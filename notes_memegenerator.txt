@@ -1,0 +1,47 @@
+https://ibaslogic.com/meme-generator-with-react-hooks/
+
+Create a memegenerator -- subgoal is to use React Hooks to remove classes for state management and use only functions.
+
+original at git clone https://github.com/Ibaslogic/memegenerator
+then run npm install to set up node modules in the folder (not backed up to github)
+
+In components folder
+Both the Header.js and MemeApp.js are each a function component. The MemeGenerator.js manages the state and a lifecycle method, hence constructed using a class component. 
+
+Goal of course is to change this class to a function.
+
+
+Importing from React
+
+Can import multiple components in a single import statement separated by commas.
+
+    import React, {useState} from "react"
+
+useState is the React Hook which returns an array with first item is the current state, the second item is a function to use to update the state.
+
+        console.log (useState("hello"))
+
+"hello" is passed to become the  first argument (Array[0])
+Array[1] is callback to update the state.  
+
+destructureing the Array   
+  The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables. 
+   https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/
+
+    const [topText, setTopText] = useState("hello")
+
+        console.log (topText) //"hello"
+        console.log (setTopText)  // long function
+
+  review:
+      var [foo, [[bar], baz]] = [1, [[2], 3]];  // pulling values from nested arrays
+
+      skip items
+      var [,,third] = ["foo", "bar", "baz"];  //third now = "baz"
+
+
+---
+After copying in a bunch of code into MemeGenerator.js
+
+Using a function and Reactor Hook, you can group lots of data. (I am guessing that with a class you update parts.)
+You should know that anytime you are grouping related data in an object, the useState Hook doesn’t merge the old and new state. Instead, it overrides the entire state with that of the current.
